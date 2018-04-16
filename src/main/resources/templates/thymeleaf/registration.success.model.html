@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+	<h1 th:text="'Account ' + ${user.username} + ' created'">success</h1>
+	<a th:href="@{/user/login}" th:text="#{label.form.loginLink}">login</a>
+</body>
+</html>

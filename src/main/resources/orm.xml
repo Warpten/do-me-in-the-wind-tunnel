@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
+ http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
+    version="2.1">
+
+    <entity class="fr.formation.spring.museum.models.Account">
+        <named-entity-graph name="graph.Account.withRankName">
+            <named-attribute-node name="id" />
+            <named-attribute-node name="username" />
+            <named-attribute-node name="rank" subgraph="graph.Account.withRankName.subgraph.rank" />
+
+            <subgraph name="graph.Account.withRankName.subgraph.rank"
+				class="fr.formation.spring.museum.models.Rank">
+                <named-attribute-node name="id" />
+                <named-attribute-node name="name" />
+            </subgraph>
+
+        </named-entity-graph>
+    </entity>
+
+
+	<entity class="fr.formation.spring.museum.models.Rank">
+		<named-entity-graph name="graph.Rank.withUserNames">
+			<named-attribute-node name="id" />
+			<named-attribute-node name="name"/>
+			<named-attribute-node name="users" subgraph="graph.Rank.withUserNames.subgraph.userNames" />
+			
+			<subgraph name="graph.Rank.withUserNames.subgraph.userNames"
+				class="fr.formation.spring.museum.models.Account">
+	            <named-attribute-node name="id" />
+	            <named-attribute-node name="username" />
+			</subgraph>
+
+		</named-entity-graph>
+	</entity>
+</entity-mappings>
