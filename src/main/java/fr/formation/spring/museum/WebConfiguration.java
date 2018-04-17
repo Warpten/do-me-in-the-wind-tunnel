@@ -5,12 +5,12 @@ import java.util.Locale;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
@@ -25,18 +25,18 @@ import fr.formation.spring.museum.interceptors.PerformanceInterceptor;
 @EnableWebMvc
 public class WebConfiguration implements WebMvcConfigurer {
 	
-	/**
-	 * Equivalent to mvc:interceptors.
-	 */
+	// Equivalent to mvc:interceptors.
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(performanceInterceptor());
 		registry.addInterceptor(localeChangeInterceptor());
 	}
 	
+	// Adds handlers for static resources
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/css/**").addResourceLocations("/resources/css/");
+		registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
 	}
 	
 	/**
@@ -53,22 +53,20 @@ public class WebConfiguration implements WebMvcConfigurer {
 		return new PerformanceInterceptor();
 	}
 	
+	// Add converters and formatters to be leveraged by Spring MVC when dealing with forms (and other things?)
 	@Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(new StringToDateConverter());
         // registry.addConverter(new IntegerToRankConverter());
     }
 	
-    @Value("${spring.view.prefix}")
-    private String prefix = "/WEB-INF/jsp/";
+	// Retrieved from application.properties
+   
+    private @Value("${spring.view.prefix}")     String prefix = "/WEB-INF/jsp/";
+    private @Value("${spring.view.suffix}")     String suffix = ".jsp";
+    private @Value("${spring.view.view-names}") String viewNames = "jsp/*";
 
-    @Value("${spring.view.suffix}")
-    private String suffix = ".jsp";
-
-    @Value("${spring.view.view-names}")
-    private String viewNames = "jsp/*";
-
-	
+	// Configure a view resolver for JSPs
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -79,6 +77,7 @@ public class WebConfiguration implements WebMvcConfigurer {
         registry.viewResolver(resolver);
 	}
 	
+	// Configure a locale resolver for messages_XX.properties
 	@Bean
 	public LocaleResolver localeResolver() {
 		SessionLocaleResolver localeResolver = new SessionLocaleResolver();
@@ -86,11 +85,19 @@ public class WebConfiguration implements WebMvcConfigurer {
 		return localeResolver;
 	}
 
-	@Bean
+	// I forget what this is
+	@Bean	
 	public LocaleChangeInterceptor localeChangeInterceptor() {
 		LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
 		lci.setParamName("locale");
 		return lci;
+	}
+	
+	@Bean
+	public ResourceBundleMessageSource messageSource() {
+		ResourceBundleMessageSource bundle = new ResourceBundleMessageSource();
+		bundle.setBasename("messages");
+		return bundle;
 	}
 
 }

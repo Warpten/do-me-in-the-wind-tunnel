@@ -1,5 +1,6 @@
 package fr.formation.spring.museum.models;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
@@ -20,7 +21,10 @@ import fr.formation.spring.museum.models.views.AccountModelView;
 import fr.formation.spring.museum.models.views.RankModelView;
 
 @Entity
-public class Account {
+public class Account implements Serializable {
+
+	private static final long serialVersionUID = -3276168618619336563L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonView(value = { AccountModelView.Public.class, RankModelView.Public.class })

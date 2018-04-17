@@ -1,4 +1,4 @@
-package fr.formation.spring.museum.controllers;
+package fr.formation.spring.museum.controllers.jsp;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

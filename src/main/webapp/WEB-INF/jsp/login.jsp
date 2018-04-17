@@ -6,9 +6,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Spring Security Example</title>
-<link rel="stylesheet" type="text/css"
-	href="<c:url value="/css/login.css" />" />
+	<title>MuseeCP - Login</title>
+	<link rel="stylesheet" type="text/css" href="<c:url value="/css/login.css" />" />
 </head>
 <body>
 	<form action="/login" method="POST" class="form-style-7">

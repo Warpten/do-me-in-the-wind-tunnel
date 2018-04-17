@@ -16,6 +16,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import fr.formation.spring.museum.models.AccessLog;
 import fr.formation.spring.museum.repositories.AccessLogRepository;
 
+// A shitty implementation of performance profiling.
 @Component
 public class PerformanceInterceptor extends HandlerInterceptorAdapter {
 	protected final static Log logger = LogFactory.getLog(PerformanceInterceptor.class);

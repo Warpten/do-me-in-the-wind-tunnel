@@ -10,6 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 import fr.formation.spring.museum.models.Account;
 import fr.formation.spring.museum.repositories.AccountRepository;
 
+/**
+ * A service that interfaces between {@link JpaUserDetailsService} and {@link AccountDetails}
+ * for use by Spring Security.
+ * 
+ * @author INTI0356
+ *
+ */
 @Service
 public class JpaUserDetailsService implements UserDetailsService {
 

@@ -39,9 +39,8 @@ public class TestController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView showHome() {
-		ModelAndView model = new ModelAndView("jsp/test");
-		model.addObject("account", new Account());
-		model.addObject("rankList", rankRepository.findAll());
+		ModelAndView model = new ModelAndView("thymeleaf/test");
+		model.addObject("name", "WOrld");
 		return model;
 	}
 
