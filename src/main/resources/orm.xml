@@ -9,7 +9,7 @@
         <named-entity-graph name="graph.Account.withRankName">
             <named-attribute-node name="id" />
             <named-attribute-node name="username" />
-            <named-attribute-node name="rank" subgraph="graph.Account.withRankName.subgraph.rank" />
+            <named-attribute-node name="ranks" subgraph="graph.Account.withRankName.subgraph.rank" />
 
             <subgraph name="graph.Account.withRankName.subgraph.rank"
 				class="fr.formation.spring.museum.models.Rank">

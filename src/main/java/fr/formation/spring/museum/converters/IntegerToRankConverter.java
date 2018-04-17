@@ -10,13 +10,14 @@ import fr.formation.spring.museum.repositories.RankRepository;
 import net.minidev.asm.ex.ConvertException;
 
 
-public class IntegerToRankConverter implements Converter<Integer, Rank>
+public class IntegerToRankConverter implements Converter<String, Rank>
 {
 	@Autowired
 	public RankRepository rankRepository;
 	
 	@Override
-	public Rank convert(Integer source) {
+	public Rank convert(String sourceStr) {
+		int source = Integer.parseInt(sourceStr);
 		Optional<Rank> rank = rankRepository.findById(source);
 		if (rank.isPresent())
 			return rank.get();

@@ -1,15 +1,16 @@
 package fr.formation.spring.museum.models;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -37,10 +38,14 @@ public class Account {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date registrationDate;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-	@JoinColumn(name = "rank_id")
-	@JsonView(value = { AccountModelView.Public.class, RankModelView.Internal.class })
-	private Rank rank;
+
+	@ManyToMany()
+	@JoinTable(
+		name="account_ranks",
+		joinColumns = @JoinColumn(name = "account_id"),
+		inverseJoinColumns = @JoinColumn(name = "rank_id"))
+	private Set<Rank> ranks;
+	
 	
 	public int getId() { return this.id; }
 	public String getUsername() { return this.username; }
@@ -52,6 +57,6 @@ public class Account {
 	public void setPassword(String password) { this.password = password; }
 	public void setRegistrationDate(Date registrationDate) { this.registrationDate = registrationDate; }
 	
-	public Rank getRank() { return this.rank; }
-	public void setRank(Rank rank) { this.rank = rank; }
+	public Set<Rank> getRanks() { return this.ranks; }
+	public void setRanks(Set<Rank> ranks) { this.ranks = ranks; }
 }

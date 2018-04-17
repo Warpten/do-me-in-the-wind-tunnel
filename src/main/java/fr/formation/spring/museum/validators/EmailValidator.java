@@ -1,10 +1,12 @@
-package fr.formation.spring.museum.annotations;
+package fr.formation.spring.museum.validators;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+
+import fr.formation.spring.museum.annotations.Email;
 
 public class EmailValidator implements ConstraintValidator<Email, String> {
    

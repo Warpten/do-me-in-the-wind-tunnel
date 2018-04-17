@@ -53,7 +53,7 @@ public class TestController {
 			if (!result.hasErrors())
 				accountRepository.save(modelAttribute);
 		} else {
-			errors.rejectValue("username", "username already exists");
+			errors.rejectValue("username", "error.username.already.used");
 		}
 
 		ModelAndView model = new ModelAndView("jsp/test");

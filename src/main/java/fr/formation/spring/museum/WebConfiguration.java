@@ -9,6 +9,7 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -17,7 +18,6 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-import fr.formation.spring.museum.converters.IntegerToRankConverter;
 import fr.formation.spring.museum.converters.StringToDateConverter;
 import fr.formation.spring.museum.interceptors.PerformanceInterceptor;
 
@@ -35,8 +35,8 @@ public class WebConfiguration implements WebMvcConfigurer {
 	}
 	
 	@Override
-	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/user/login.html");
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/css/**").addResourceLocations("/resources/css/");
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class WebConfiguration implements WebMvcConfigurer {
 	@Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(new StringToDateConverter());
-        registry.addConverter(new IntegerToRankConverter());
+        // registry.addConverter(new IntegerToRankConverter());
     }
 	
     @Value("${spring.view.prefix}")
