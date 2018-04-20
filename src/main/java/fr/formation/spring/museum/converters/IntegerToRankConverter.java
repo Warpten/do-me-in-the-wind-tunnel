@@ -7,8 +7,6 @@ import org.springframework.core.convert.converter.Converter;
 
 import fr.formation.spring.museum.models.Rank;
 import fr.formation.spring.museum.repositories.RankRepository;
-import net.minidev.asm.ex.ConvertException;
-
 
 public class IntegerToRankConverter implements Converter<String, Rank>
 {
@@ -22,6 +20,6 @@ public class IntegerToRankConverter implements Converter<String, Rank>
 		if (rank.isPresent())
 			return rank.get();
 
-		throw new ConvertException("Unknown rank id " + source);
+		throw new IllegalArgumentException("Unknown rank id " + source);
 	}
 }

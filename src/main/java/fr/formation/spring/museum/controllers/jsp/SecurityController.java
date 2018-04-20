@@ -1,5 +1,7 @@
 package fr.formation.spring.museum.controllers.jsp;
 
+import java.util.Optional;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class SecurityController
@@ -46,5 +50,14 @@ public class SecurityController
 	}
 	
 	@GetMapping(value = "/403")
-	public String accessDeniedPage() { return "jsp/403"; }
+	public ModelAndView accessDeniedPage(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("jsp/403");
+		mv.addObject("previousPage", getPreviousPageByRequest(request).orElse("/"));
+		return mv;
+	}
+	
+	protected Optional<String> getPreviousPageByRequest(HttpServletRequest request)
+	{
+	   return Optional.ofNullable(request.getHeader("Referer")).map(requestUrl -> "redirect:" + requestUrl);
+	}
 }

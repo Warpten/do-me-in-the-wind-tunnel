@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -8,34 +9,45 @@
 <head>
 	<title>MuseeCP - Login</title>
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/login.css" />" />
+	<link rel="stylesheet" type="text/css" href="<c:url value="/css/main.css" />" />
 </head>
 <body>
-	<form action="/login" method="POST" class="form-style-7">
-		<h1 id="title">MuseeCP <span>v0.0.1-SNAPSHOT</span></h1>
+	<form action="/login" method="POST" class="body-block">
+		<h1 class="body-block-title">MuseeCP <span>v0.0.1-SNAPSHOT</span></h1>
 	
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
 	<c:if test="${param.error ne null}">
-		<div id="login-error">Invalid username and/or password.</div>
+		<div id="login-error"><img src="<c:url value="/img/error.png" />" /><spring:message code="label.login.error" /></div>
 	</c:if>
 
 	<c:if test="${param.logout ne null}">
-		<div id="logout-success">You have successfully logged out.</div>
+		<div id="logout-success"><img src="<c:url value="/img/disconnect.png" />" /><spring:message code="label.logout.success" /></div>
 	</c:if>
 
 		<ul>
 			<li>
-				<label for="name"><spring:message code="label.form.login.field.username" text="???" /></label>
+				<label for="name"><spring:message code="label.form.login.field.username" /></label>
 				<input type="text" name="username" maxlength="100">
-				<span>Enter the username you wish to use.</span>
+				<span><spring:message code="label.form.login.field.username.details" /></span>
 			</li>
 			<li>
-				<label for="password">Password</label>
+				<label for="password"><spring:message code="label.form.login.field.password" /></label>
 				<input type="password" name="password">
-				<span>Enter your password.</span>
+				<span><spring:message code="label.form.login.field.password.details" /></span>
 			</li>
-			<li><input type="submit" value="Send This"></li>
+			<spring:message code="label.form.login.submit" var="form_submit" />
+			<spring:message code="label.form.login.button.register" var="form_register" />
+
+			<li>
+				<input type="submit" value="${form_submit}" />
+				<input type="button" value="${form_register}" />
+			</li>
 		</ul>
 	</form>
+	<p>
+		<a href="?locale=fr"><img src="/img/flags/fr.png" /></a>
+		<a href="?locale=en"><img src="/img/flags/gb.png" /></a>
+	</p>
 </body>
 </html>

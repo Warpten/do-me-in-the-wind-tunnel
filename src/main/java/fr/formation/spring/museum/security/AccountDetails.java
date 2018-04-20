@@ -28,6 +28,13 @@ public class AccountDetails implements UserDetails {
 			authorities.add(new SimpleGrantedAuthority("ROLE_" + rank.getAuthority()));
 		return authorities;
 	}
+	
+	public boolean hasAuthority(String authority) {
+		for (Rank rank : account.getRanks())
+			if (rank.getAuthority().equals(authority))
+				return true;
+		return false;
+	}
 
 	@Override
 	public String getPassword() { return account.getPassword(); }
@@ -47,5 +54,5 @@ public class AccountDetails implements UserDetails {
 	@Override
 	public boolean isEnabled() { return true; }
 	
-	
+	public Account getAccount() { return this.account; }
 }

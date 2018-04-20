@@ -4,7 +4,6 @@ table#user-list {
     width: 480px;
     text-align: left;
     border-collapse: collapse;
-    margin: 20px;
 }
 
 table#user-list th {
@@ -23,4 +22,8 @@ table#user-list td {
 
 table#user-list tr:nth-child(even), table#user-list tr.odd {
 	background: #e8edff;
+}
+
+th.paging-cell {
+	text-align: right;
 }

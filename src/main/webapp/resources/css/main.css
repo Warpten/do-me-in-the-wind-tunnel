@@ -1,1 +1,208 @@
-body { font-family: Sans; }
+body { font-family: Sans; padding: 25px; }
+
+.body-block {
+	width: fit-content;
+    background: #FAFAFA;
+    padding: 10px;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+    border-radius: 10px;
+    border: 6px solid #305A72;
+}
+
+#menu {
+	min-width: 250px;
+}
+
+.body-block h1.body-block-title:first-child {
+	margin-top: -16px !important;
+}
+
+.body-block h1.body-block-title {
+	margin-top: 20px;
+    margin-left: -16px !important;
+    margin-right: -16px !important;
+    margin-bottom: 20px !important;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+    background-color: #305A72 !important;
+    color: white !important;
+    
+    display: block;
+    text-align: center;
+    padding: 0;
+    font-size: large;
+}
+
+.flex-item-grow {
+	flex-grow: 1;
+}
+
+.flex-container > div { height: fit-content; width: fit-content; }
+
+.fit-content-height { height: fit-content; }
+.fit-content-width { width: fit-content; }
+
+.flex-container        { display: flex; }
+.flex-direction-row    { flex-direction: row; }
+.flex-direction-column { flex-direction: column; }
+.flex-justify-start    { justify-content: flex-start; }
+.flex-justify-end      { justify-content: flex-end; }
+.flex-justify-center   { justify-content: center; }
+.flex-justify-between  { justify-content: space-between; }
+.flex-justify-around   { justify-content: space-around; }
+
+.flex-wrap { flex-wrap: wrap; }
+
+.flex-align-start      { align-items: flex-start; }
+.flex-align-end        { align-items: flex-end; }
+.flex-align-center     { align-items: center; }
+.flex-align-stretch    { align-items: stretch; }
+.flex-align-baseline   { align-items: baseline; }
+
+.flex-align-self-start      { align-self: flex-start; }
+.flex-align-self-end        { align-self: flex-end; }
+.flex-align-self-center     { align-self: center; }
+.flex-align-self-stretch    { align-self: stretch; }
+.flex-align-self-baseline   { align-self: baseline; }
+
+.list-no-bullet { list-style-type: none; }
+
+ul.menu-link-list {
+	margin-left: -10px;
+	margin-right: -10px;
+	margin-top: -10px;
+	margin-bottom: -10px;
+	
+	padding: 0px;
+}
+
+ul.menu-link-list li {
+	display: block;
+	padding: 3px 7px 3px 7px;
+	border: 1px solid transparent;
+}
+
+ul.menu-link-list li a {
+	text-decoration: none;
+	color: black;
+	display: block;
+}
+
+ul.menu-link-list li:hover {
+	border-top: 1px solid #305A72;
+	border-bottom: 1px solid #305A72;
+	background-color: #5083a0;
+	text-shadow: 0 0 5px white;
+	font-style: italic;
+}
+ul.menu-link-list li img { vertical-align: middle; padding: 3px 5px 3px 0px; }
+
+.sub-block {
+	display: block;
+	width: fit-content;
+}
+
+form ul{
+    list-style:none;
+    padding:0;
+    margin:0;   
+}
+form li{
+    display: block;
+    padding: 9px;
+    border:1px solid #DDDDDD;
+    margin-bottom: 30px;
+    border-radius: 3px;
+}
+form li:last-child{
+    border:none;
+    margin-bottom: 0px;
+    text-align: center;
+}
+form li > label{
+    display: block;
+    float: left;
+    margin-top: -19px;
+    background: #FFFFFF;
+    height: 14px;
+    padding: 2px 5px 2px 5px;
+    color: #B9B9B9;
+    font-size: 14px;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+}
+form input[type="text"],
+form input[type="date"],
+form input[type="datetime"],
+form input[type="email"],
+form input[type="number"],
+form input[type="search"],
+form input[type="time"],
+form input[type="url"],
+form input[type="password"],
+form textarea,
+form select 
+{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+    display: block;
+    outline: none;
+    border: none;
+    /* height: 25px; */
+    line-height: 25px;
+    font-size: 16px;
+    padding: 6px; /* former 0 */
+    font-family: Georgia, "Times New Roman", Times, serif;
+    background: #FAFAFA;
+}
+form input[type="text"]:focus,
+form input[type="date"]:focus,
+form input[type="datetime"]:focus,
+form input[type="email"]:focus,
+form input[type="number"]:focus,
+form input[type="search"]:focus,
+form input[type="time"]:focus,
+form input[type="url"]:focus,
+form input[type="password"]:focus,
+form textarea:focus,
+form select:focus 
+{
+}
+form li > span{
+    background: #F3F3F3;
+    display: block;
+    padding: 3px;
+    margin: 0 -9px -9px -9px;
+    text-align: center;
+    color: #C0C0C0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+}
+form textarea{
+    resize:none;
+}
+form input[type="submit"],
+form input[type="button"]{
+    background: #2471FF;
+    border: none;
+    padding: 10px 20px 10px 20px;
+    border-bottom: 3px solid #5994FF;
+    border-radius: 3px;
+    color: #D2E2FF;
+}
+form input[type="submit"]:hover,
+form input[type="button"]:hover{
+    background: #6B9FFF;
+    color:#fff;
+}
+
+.flex-container {
+	padding: 10px;
+}
+
+.flex-container > * { margin: 10px; }

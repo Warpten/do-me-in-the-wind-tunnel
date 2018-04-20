@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.format.FormatterRegistry;
@@ -13,8 +14,8 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
@@ -23,6 +24,7 @@ import fr.formation.spring.museum.interceptors.PerformanceInterceptor;
 
 @Configuration
 @EnableWebMvc
+@ComponentScan("fr.formation.spring.museum")
 public class WebConfiguration implements WebMvcConfigurer {
 	
 	// Equivalent to mvc:interceptors.
@@ -37,6 +39,7 @@ public class WebConfiguration implements WebMvcConfigurer {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/css/**").addResourceLocations("/resources/css/");
 		registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
+		registry.addResourceHandler("/img/**").addResourceLocations("/resources/img/");
 	}
 	
 	/**
@@ -80,9 +83,11 @@ public class WebConfiguration implements WebMvcConfigurer {
 	// Configure a locale resolver for messages_XX.properties
 	@Bean
 	public LocaleResolver localeResolver() {
-		SessionLocaleResolver localeResolver = new SessionLocaleResolver();
-		localeResolver.setDefaultLocale(Locale.US);
-		return localeResolver;
+		CookieLocaleResolver localeResolver = new CookieLocaleResolver();
+        localeResolver.setDefaultLocale(Locale.ENGLISH);
+        localeResolver.setCookieName("my-locale-cookie");
+        localeResolver.setCookieMaxAge(3600);
+        return localeResolver;
 	}
 
 	// I forget what this is
@@ -97,6 +102,10 @@ public class WebConfiguration implements WebMvcConfigurer {
 	public ResourceBundleMessageSource messageSource() {
 		ResourceBundleMessageSource bundle = new ResourceBundleMessageSource();
 		bundle.setBasename("messages");
+		bundle.setDefaultEncoding("UTF-8");
+		
+		bundle.setFallbackToSystemLocale(false);
+		bundle.setCacheMillis(0);
 		return bundle;
 	}
 
