@@ -55,14 +55,14 @@ public class PerformanceInterceptor extends HandlerInterceptorAdapter {
 		logger.info("[" + getRemoteAddr(request) + "] '" + request.getRequestURI()
 			+ "' " + handlerDuration + "/" + renderDuration + " ms.");
 		
-		AccessLog logEntry = new AccessLog();
-		logEntry.setRequestURI(request.getRequestURI());
-		logEntry.setRemoteAddress(getRemoteAddr(request));
-		logEntry.setHandlingTime(handlerDuration);
-		logEntry.setRenderingTime(renderDuration);
-		logEntry.setDate(Date.from(Instant.now()));
+//		AccessLog logEntry = new AccessLog();
+//		logEntry.setRequestURI(request.getRequestURI());
+//		logEntry.setRemoteAddress(getRemoteAddr(request));
+//		logEntry.setHandlingTime(handlerDuration);
+//		logEntry.setRenderingTime(renderDuration);
+//		logEntry.setDate(Date.from(Instant.now()));
 		
-		logRepository.save(logEntry);
+		// logRepository.save(logEntry);
 
 		super.afterCompletion(request, response, handler, ex);
 	}

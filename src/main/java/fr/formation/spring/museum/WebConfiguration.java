@@ -19,6 +19,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import fr.formation.spring.museum.converters.IntegerToLocaleConverter;
 import fr.formation.spring.museum.converters.StringToDateConverter;
 import fr.formation.spring.museum.interceptors.PerformanceInterceptor;
 
@@ -51,17 +52,22 @@ public class WebConfiguration implements WebMvcConfigurer {
 	 * If we however declare our interceptor as a bean, Spring can then manage it,
 	 * and autowire anything within it for us.
 	 */
-	@Bean
-	public PerformanceInterceptor performanceInterceptor() {
+	public @Bean PerformanceInterceptor performanceInterceptor() {
 		return new PerformanceInterceptor();
 	}
 	
+
 	// Add converters and formatters to be leveraged by Spring MVC when dealing with forms (and other things?)
 	@Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(new StringToDateConverter());
+        registry.addConverter(integerToLocaleConverter());
         // registry.addConverter(new IntegerToRankConverter());
     }
+	
+	public @Bean IntegerToLocaleConverter integerToLocaleConverter() {
+		return new IntegerToLocaleConverter();
+	}
 	
 	// Retrieved from application.properties
    
@@ -81,8 +87,7 @@ public class WebConfiguration implements WebMvcConfigurer {
 	}
 	
 	// Configure a locale resolver for messages_XX.properties
-	@Bean
-	public LocaleResolver localeResolver() {
+	public @Bean LocaleResolver localeResolver() {
 		CookieLocaleResolver localeResolver = new CookieLocaleResolver();
         localeResolver.setDefaultLocale(Locale.ENGLISH);
         localeResolver.setCookieName("my-locale-cookie");
@@ -91,15 +96,13 @@ public class WebConfiguration implements WebMvcConfigurer {
 	}
 
 	// I forget what this is
-	@Bean	
-	public LocaleChangeInterceptor localeChangeInterceptor() {
+	public @Bean LocaleChangeInterceptor localeChangeInterceptor() {
 		LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
 		lci.setParamName("locale");
 		return lci;
 	}
 	
-	@Bean
-	public ResourceBundleMessageSource messageSource() {
+	public @Bean ResourceBundleMessageSource messageSource() {
 		ResourceBundleMessageSource bundle = new ResourceBundleMessageSource();
 		bundle.setBasename("messages");
 		bundle.setDefaultEncoding("UTF-8");

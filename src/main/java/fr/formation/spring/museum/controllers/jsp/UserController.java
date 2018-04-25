@@ -1,25 +1,22 @@
 package fr.formation.spring.museum.controllers.jsp;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import fr.formation.spring.museum.models.Account;
-import fr.formation.spring.museum.models.AccountDTO;
+import fr.formation.spring.museum.models.AccountInfoDTO;
 import fr.formation.spring.museum.repositories.AccountRepository;
+import fr.formation.spring.museum.repositories.LocaleRepository;
 import fr.formation.spring.museum.security.IAccountDetailsProvider;
 
 @Controller
@@ -33,65 +30,68 @@ public class UserController {
 	private IAccountDetailsProvider accountDetailsProvider;
 	
 	@Autowired
+	private LocaleRepository localeRepository;
+	
+	@Autowired
 	@Qualifier("passwordEncoder")
 	private PasswordEncoder passwordEncoder;
-	
-	private  String dateFormat = "yyyy-MM-dd";
-	
-	@GetMapping(value = "/management")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ModelAndView handleUserManagement(@RequestParam(value = "page", defaultValue = "0") int page) {
-		
-		final int RESULT_PER_PAGE = 1;
-		
-		// If using page=...&size=..., Spring automatically creates a Pageable for us. But we don't want that.
-		PageRequest pageable = PageRequest.of(page, RESULT_PER_PAGE);
-
-		ModelAndView mv = new ModelAndView("jsp/user/mgmt");
-		mv.addObject("users", accountRepository.findAll(pageable).getContent());
-		mv.addObject("dateFormat", dateFormat);
-		mv.addObject("totalResults", accountRepository.count());
-		mv.addObject("pageId", page);
-		mv.addObject("resultPerPage", RESULT_PER_PAGE);
-
-		// ...
-		
-		return mv;
-	}
 	
 	@GetMapping(value = "/edit-profile")
 	public ModelAndView handleUserEditProfile() {
 		ModelAndView mv = new ModelAndView();
 		
+		Account self = accountDetailsProvider.getAccount();
+		AccountInfoDTO dto = new AccountInfoDTO();
+		dto.name = self.getName();
+		dto.surname = self.getSurname();
+		
 		mv.setViewName("jsp/user/profile_edit_form");
-		mv.addObject("accountPasswordDTO", new AccountDTO());
+		mv.addObject("accountInfo", dto);
+		mv.addObject("locales", localeRepository.findAll());
 
 		return mv;
 	}
 	
 	@PostMapping(value = "/edit-profile")
-	public String handleUserEditProfilePOST(Model model, RedirectAttributes ra, @ModelAttribute AccountDTO accountModel) {
+	public String handleUserEditProfilePOST(Model model, RedirectAttributes ra, @ModelAttribute AccountInfoDTO accountModel) {
+		
+		boolean passwordSet = false;
+		model.addAttribute("accountInfo", accountModel);
+		model.addAttribute("locales", localeRepository.findAll());
 		
 		Account self = accountDetailsProvider.getAccount();
-		
-		// TODO: Skip checks if not editing self (implied admin access if thats the case)
+
 		if (!accountModel.getNewPassword().equals(accountModel.getNewPasswordConfirmation())) {
-			// TODO password mismatch, print error and allow edits
+			model.addAttribute("global_error_mismatch", "label.form.user.settings.error.passwordMismatch");
+			return "jsp/user/profile_edit_form";
 		}
-		
-		String oldHashedPassword = passwordEncoder.encode(accountModel.getOldPassword());
-		if (!self.getPassword().equals(oldHashedPassword))
-		{
-			// TODO git gud and give me the actual password
+		 
+		if (!passwordEncoder.matches(accountModel.getOldPassword(), self.getPassword())) {
+			model.addAttribute("global_error", "label.form.user.settings.error.invalidPassword");
+			return "jsp/user/profile_edit_form";
 		}
 
-		String newHashedPassword = passwordEncoder.encode(accountModel.getNewPassword());
-		self.setPassword(newHashedPassword);
+		if (accountModel.getNewPassword().trim().length() != 0) {
+			passwordSet = true;
+			String newHashedPassword = passwordEncoder.encode(accountModel.getNewPassword());
+			self.setPassword(newHashedPassword);
+		}
+		
+		if (accountModel.getName() != null && !StringUtils.isEmpty(accountModel.getName().trim())) {
+			 self.setName(accountModel.getName());
+		}
+		
+		if (accountModel.getSurname() != null && !StringUtils.isEmpty(accountModel.getSurname().trim())) {
+			 self.setSurname(accountModel.getSurname());
+		}
+		
+		self.setPreferredLocale(accountModel.getPreferredLocale());
+		
 		accountRepository.save(self);
 		
 		// TODO: Handle; flash attrs are weird
 		// ra.addFlashAttribute("logout_reason", "label.info.loggedout.security");
 		
-		return "redirect:/logout";
+		return passwordSet ? "redirect:/logout" : "jsp/user/profile_edit_form";
 	}
 }

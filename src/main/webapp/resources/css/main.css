@@ -18,13 +18,15 @@ body { font-family: Sans; padding: 25px; }
 	margin-top: -16px !important;
 }
 
+body { width: fit-content; margin: auto; }
+
 .body-block h1.body-block-title {
 	margin-top: 20px;
     margin-left: -16px !important;
     margin-right: -16px !important;
     margin-bottom: 20px !important;
-    padding-top: 20px !important;
-    padding-bottom: 20px !important;
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
     border-top-left-radius: 10px !important;
     border-top-right-radius: 10px !important;
     background-color: #305A72 !important;
@@ -33,10 +35,20 @@ body { font-family: Sans; padding: 25px; }
     display: block;
     text-align: center;
     padding: 0;
-    font-size: large;
+    font-size: 105%;
+}
+
+.body-block h3.body-block-title {
+	margin: -10px;
+    margin-bottom: 10px;
+    background-color: #305A72;
+    padding: 10px;
+    color: white;
+    font-size: 75%;
 }
 
 .flex-item-grow {
+	flex-basis:0;
 	flex-grow: 1;
 }
 
@@ -117,11 +129,24 @@ form li{
     margin-bottom: 30px;
     border-radius: 3px;
 }
-form li:last-child{
-    border:none;
-    margin-bottom: 0px;
-    text-align: center;
+
+form li.error {
+	border-color: darkred;
 }
+
+form li.error label {
+	color: darkred;
+}
+
+form li.error span {
+	color:darkred;
+	background-color: #ff7d7d !important;
+}
+
+form ul > li:last-child {
+	margin-bottom: 0px !important;
+}
+
 form li > label{
     display: block;
     float: left;
@@ -206,3 +231,49 @@ form input[type="button"]:hover{
 }
 
 .flex-container > * { margin: 10px; }
+
+.inline-warning {
+	background-color: #ff7d7d;
+	border: 1px solid #6b0707;
+	color: darkred;
+    padding: 5px;
+    float: right;
+    clear:right;
+    margin: -10px;
+    border-radius: 3px;
+    font-size: 105%;
+    font-weight: initial;
+}
+
+.inline-warning > img:first-child {
+	vertical-align: middle;
+    margin: -2px;
+    margin-right: 3px;
+    margin-top: -5px;
+}
+
+.barebones { margin: 0 !important; padding: 0 !important; }
+
+.error-popin, .success-popin {
+	border-radius: 5px;
+	padding: 10px 20px;
+	margin-bottom: 20px;
+	width: fit-content;
+	margin: auto;
+}
+
+.hidden { 	display: none; }
+
+.error-popin {
+	background-color: #ff7d7d;
+	border: 1px solid #6b0707;
+	color: darkred;
+}
+
+.success-popin {
+	background-color: #31e286;
+	border: 1px solid #076b53;
+	color: #076b53;
+}
+
+tr.disabled td:not(:last-child) { opacity: 0.5; }

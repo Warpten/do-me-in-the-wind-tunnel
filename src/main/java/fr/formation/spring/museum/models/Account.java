@@ -6,12 +6,14 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -37,11 +39,17 @@ public class Account implements Serializable {
 	@JsonView(value = { AccountModelView.Public.class, RankModelView.Internal.class })
 	private String password;
 	
-	@Column(nullable = true, name="registration_date")
+	@Column(nullable = true, name = "registration_date")
 	@JsonView(value = { AccountModelView.Public.class, RankModelView.Internal.class })
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date registrationDate;
-
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(nullable = true, name = "pref_locale")
+	private Locale preferredLocale;
+	
+	private String name;
+	private String surname;
 
 	@ManyToMany()
 	@JoinTable(
@@ -50,16 +58,26 @@ public class Account implements Serializable {
 		inverseJoinColumns = @JoinColumn(name = "rank_id"))
 	private Set<Rank> ranks;
 	
+	private boolean enabled;
+	
 	
 	public int getId() { return this.id; }
 	public String getUsername() { return this.username; }
 	public String getPassword() { return this.password; }
 	public Date getRegistrationDate() { return this.registrationDate; }
+	public String getName() { return this.name; }
+	public String getSurname() { return this.surname; }
+	public Locale getPreferredLocale() { return this.preferredLocale; }
+	public boolean isEnabled() { return this.enabled; }
 
 	public void setId(int id) { this.id = id; }
 	public void setUsername(String username) { this.username = username; }
 	public void setPassword(String password) { this.password = password; }
 	public void setRegistrationDate(Date registrationDate) { this.registrationDate = registrationDate; }
+	public void setName(String name) { this.name = name; }
+	public void setSurname(String surname) { this.surname = surname; }
+	public void setPreferredLocale(Locale locale) { this.preferredLocale = locale; }
+	public void setEnabled(boolean enabled) { this.enabled = enabled; }
 	
 	public Set<Rank> getRanks() { return this.ranks; }
 	public void setRanks(Set<Rank> ranks) { this.ranks = ranks; }
