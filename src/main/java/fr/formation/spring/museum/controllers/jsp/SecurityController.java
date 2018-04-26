@@ -7,12 +7,9 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
-import org.omg.PortableInterceptor.SUCCESSFUL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,21 +20,18 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.formation.spring.museum.models.Account;
 import fr.formation.spring.museum.models.RegistrationDTO;
 import fr.formation.spring.museum.repositories.AccountRepository;
+import fr.formation.spring.museum.repositories.LocaleRepository;
 import fr.formation.spring.museum.repositories.RankRepository;
 
 @Controller
@@ -45,6 +39,7 @@ public class SecurityController
 {
 	private @Autowired AccountRepository accountRepository;
 	private @Autowired RankRepository rankRepository;
+	private @Autowired LocaleRepository localeRepository;
 	
 	@Autowired
 	@Qualifier("passwordEncoder")
@@ -84,6 +79,7 @@ public class SecurityController
 		if (auth != null)
 			model.addAttribute("message", "label.form.login.error.already_logged_in");
 		model.addAttribute("registrationModel", new RegistrationDTO());
+		model.addAttribute("locales", localeRepository.findAll());
 		return "jsp/register";
 	}
 	
@@ -92,14 +88,15 @@ public class SecurityController
 			BindingResult result) {
 		
 		model.addAttribute("registrationModel", dto);
+		model.addAttribute("locales", localeRepository.findAll());
 		
 		if (accountRepository.existsByUsername(dto.getUsername())) {
-			model.addAttribute("error_username", "error.form.register.username_taken");
+			model.addAttribute("error_username", "error.form.register.username_in_use");
 			return "jsp/register";
 		}
 		
 		if (accountRepository.existsByEmail(dto.getEmail())) {
-			model.addAttribute("error_mail", "error.form.register.email_used");
+			model.addAttribute("error_mail", "error.form.register.email_in_use");
 			return "jsp/register";
 		}
 		
@@ -111,7 +108,7 @@ public class SecurityController
 			newAccount.setName(dto.getName());
 			newAccount.setSurname(dto.getSurname());
 			newAccount.setRegistrationDate(Date.from(Instant.now()));
-			newAccount.setEnabled(false);
+			newAccount.setEnabled(true); // TODO: Send confirmation emails that *then* set this to true
 			newAccount.setRank(rankRepository.findByName("USER"));
 			newAccount.setEmail(dto.getEmail());
 			accountRepository.save(newAccount);

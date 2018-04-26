@@ -31,6 +31,7 @@
 				</li>
 				<li class="${error_password ne null ? 'error' : ''}">
 					<label for="password"><spring:message code="label.form.register.field.password" /></label>
+					<meter max="4" id="password-strength-meter"></meter>
 					<form:password path="password" />
 					<span><spring:message code="${error_password ne null ? error_password : 'label.form.register.field.password.details'}" /></span>
 				</li>
@@ -53,6 +54,17 @@
 					<form:input path="surname" />
 					<span><spring:message code="${error_surname ne null ? error_surname : 'label.form.register.field.surname.details'}" /></span>
 				</li>
+				
+				<li>
+					<label for="preferredLocale"><spring:message code="label.form.register.field.locale" /></label>
+					<form:select path="preferredLocale">
+						<c:forEach items="${locales}" var="locale">
+							<c:set var="locale_key" value="label.lang.${locale.key}"/>
+							<option value="${locale.id}"><spring:message code="${locale_key}" text="label.lang.${locale_key}" /></option>
+						</c:forEach>
+					</form:select>
+					<span><spring:message code="label.form.register.field.locale.details" /></span>
+				</li>
 			</ul>
 		</div>
 		
@@ -63,5 +75,20 @@
 		<a href="?locale=fr"><img src="/img/flags/fr.png" /></a>
 		<a href="?locale=en"><img src="/img/flags/gb.png" /></a>
 	</p>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>
+	<script>
+	var password = document.getElementById('password');
+	var meter = document.getElementById('password-strength-meter');
+
+	password.addEventListener('input', function() {
+	  var val = password.value;
+	  var result = zxcvbn(val);
+
+	  // Update the password strength meter
+	  meter.value = result.score;
+	});
+
+	</script>
 </body>
 </html>

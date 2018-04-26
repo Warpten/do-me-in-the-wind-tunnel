@@ -55,3 +55,42 @@ form > ul > li:last-child { padding: 0px !important; margin-bottom: 0px !importa
 	display:inline;
 	margin: 5px;
 }
+
+meter {
+	display: block;
+    margin: -9px;
+    transform: translateY(-100%) rotate(90deg);
+    transform-origin: left bottom;
+    float: left;
+    clear: left;
+    width: 46px;
+    height: 5px;
+    -webkit-appearance: none;
+	-moz-appearance: none;
+    appearance: none;
+    
+    /* Applicable only to Firefox */
+	background: none;
+	background-color: rgba(0, 0, 0, 0.1);
+	
+	border: 0;
+    border-radius: 1px;
+}
+
+meter::-webkit-meter-bar {
+    background: none;
+    background-color: rgba(0,0,0,0.1);
+}
+
+
+/* Webkit based browsers */
+meter[value="1"]::-webkit-meter-optimum-value { background: red; }
+meter[value="2"]::-webkit-meter-optimum-value { background: yellow; }
+meter[value="3"]::-webkit-meter-optimum-value { background: orange; }
+meter[value="4"]::-webkit-meter-optimum-value { background: green; }
+
+/* Gecko based browsers */
+meter[value="1"]::-moz-meter-bar { background: red; }
+meter[value="2"]::-moz-meter-bar { background: yellow; }
+meter[value="3"]::-moz-meter-bar { background: orange; }
+meter[value="4"]::-moz-meter-bar { background: green; }

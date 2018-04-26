@@ -17,8 +17,8 @@
 	
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
-	<c:if test="${error ne null}">
-		<div id="login-error"><img src="<c:url value="/img/error.png" />" /><spring:message code="${error ne null ? error : label.login.error}" /></div>
+	<c:if test="${param.error ne null}">
+		<div id="login-error"><img src="<c:url value="/img/error.png" />" /><spring:message code="${error ne null ? error : 'label.login.error'}" /></div>
 	</c:if>
 
 	<c:if test="${param.logout ne null}">
