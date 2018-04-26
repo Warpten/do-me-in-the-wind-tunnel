@@ -44,6 +44,7 @@ public class UserController {
 		AccountInfoDTO dto = new AccountInfoDTO();
 		dto.name = self.getName();
 		dto.surname = self.getSurname();
+		dto.preferredLocale = self.getPreferredLocale();
 		
 		mv.setViewName("jsp/user/profile_edit_form");
 		mv.addObject("accountInfo", dto);

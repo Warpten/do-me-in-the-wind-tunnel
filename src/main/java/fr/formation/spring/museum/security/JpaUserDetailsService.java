@@ -30,6 +30,9 @@ public class JpaUserDetailsService implements UserDetailsService {
 		if (user == null)
 			throw new UsernameNotFoundException("No existing account found for username '" + username + "'.");
 
+		if (!user.isEnabled())
+			throw new UsernameNotFoundException("shitters clogged");
+		
 		return new AccountDetails(user);
 
 	}

@@ -6,12 +6,20 @@
     version="2.1">
 
     <entity class="fr.formation.spring.museum.models.Account">
-        <named-entity-graph name="graph.Account.withRankName">
+        <named-entity-graph name="graph.Account.withLocaleRanks">
             <named-attribute-node name="id" />
             <named-attribute-node name="username" />
-            <named-attribute-node name="ranks" subgraph="graph.Account.withRankName.subgraph.rank" />
+            <named-attribute-node name="preferredLocale" subgraph="graph.Account.withLocaleRanks.subgraph.locale" />
 
-            <subgraph name="graph.Account.withRankName.subgraph.rank"
+            <subgraph name="graph.Account.withLocale.subgraph.locale"
+				class="fr.formation.spring.museum.models.Locale">
+                <named-attribute-node name="id" />
+                <named-attribute-node name="key" />
+            </subgraph>
+            
+            <named-attribute-node name="ranks" subgraph="graph.Account.withLocaleRanks.subgraph.ranks" />
+
+            <subgraph name="graph.Account.withLocaleRanks.subgraph.ranks"
 				class="fr.formation.spring.museum.models.Rank">
                 <named-attribute-node name="id" />
                 <named-attribute-node name="name" />

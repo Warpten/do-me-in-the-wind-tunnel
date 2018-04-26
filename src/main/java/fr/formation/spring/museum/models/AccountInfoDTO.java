@@ -1,6 +1,7 @@
 package fr.formation.spring.museum.models;
 
 public class AccountInfoDTO {
+	public int id;
 	public String name;
 	public String surname;
 	
@@ -45,6 +46,12 @@ public class AccountInfoDTO {
 	}
 	public void setNewPasswordConfirmation(String newPasswordConfirmation) {
 		this.newPasswordConfirmation = newPasswordConfirmation;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

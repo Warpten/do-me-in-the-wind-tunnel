@@ -31,7 +31,7 @@ public class WebConfiguration implements WebMvcConfigurer {
 	// Equivalent to mvc:interceptors.
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(performanceInterceptor());
+		// registry.addInterceptor(performanceInterceptor()); // too spammy
 		registry.addInterceptor(localeChangeInterceptor());
 	}
 	
@@ -111,5 +111,4 @@ public class WebConfiguration implements WebMvcConfigurer {
 		bundle.setCacheMillis(0);
 		return bundle;
 	}
-
 }

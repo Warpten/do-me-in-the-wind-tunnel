@@ -276,4 +276,6 @@ form input[type="button"]:hover{
 	color: #076b53;
 }
 
+#body-block { min-width: 800px; }
+
 tr.disabled td:not(:last-child) { opacity: 0.5; }

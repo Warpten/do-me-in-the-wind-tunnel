@@ -53,14 +53,17 @@
 				<td><c:out value="${user.surname} ${user.name}" /></td>
 				<td><fmt:formatDate pattern="${dateFormat}" value="${user.registrationDate}" /></td>
 				<td>
+					<c:url var="edit_user_url" value="/admin/edit-user">
+						<c:param name="id" value="${user.id}" />
+					</c:url>
+					<c:url var="toggle_user_url" value="/admin/${user.enabled ? 'disable' : 'enable'}">
+						<c:param name="id" value="${user.id}" />
+					</c:url>
+					<a href="${edit_user_url}"><img src="<c:url value="/img/user_edit.png" />" alt="Edit account" /></a>
 					
-					<img src="<c:url value="/img/user_edit.png" />" />
-				
 					<img src="<c:url value="/img/key_add.png" />" />
 					
-					<a href="<c:url value="/admin/${user.enabled ? 'disable' : 'enable'}?id=${user.id}" />">
-						<img src="<c:url value="/img/${user.enabled ? 'disable' : 'enable'}.png" />" />
-					</a>
+					<a href="${toggle_user_url}"><img src="<c:url value="/img/${user.enabled ? 'disable' : 'enable'}.png" />" /></a>
 				</td>
 			</tr>
 			</c:forEach>

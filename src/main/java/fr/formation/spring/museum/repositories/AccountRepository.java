@@ -20,11 +20,14 @@ import fr.formation.spring.museum.models.Account;
 @Lazy(true)
 @Transactional(readOnly = true)
 public interface AccountRepository extends JpaRepository<Account, Integer> {
-	@EntityGraph(value = "graph.Account.withRankName", type = EntityGraphType.LOAD)
+	@EntityGraph(value = "graph.Account.withLocaleRanks", type = EntityGraphType.LOAD)
 	public Account findByUsername(String username);
 	
+	public boolean existsByEmail(String email);
+	public boolean existsByUsername(String username);
+	
 	@Override
-	@EntityGraph(value = "graph.Account.withRankName", type = EntityGraphType.LOAD)
+	@EntityGraph(value = "graph.Account.withLocaleRanks", type = EntityGraphType.LOAD)
 	public List<Account> findAll();
 	
 	public Optional<Account> findByUsernameAndPassword(String username, String password);

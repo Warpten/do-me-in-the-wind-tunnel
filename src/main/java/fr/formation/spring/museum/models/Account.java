@@ -2,6 +2,7 @@ package fr.formation.spring.museum.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -14,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Email;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -31,6 +33,8 @@ public class Account implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonView(value = { AccountModelView.Public.class, RankModelView.Public.class })
 	private int id;
+
+	private String email;
 	
 	@JsonView(value = { AccountModelView.Public.class, RankModelView.Public.class })
 	private String username;
@@ -56,7 +60,7 @@ public class Account implements Serializable {
 		name="account_ranks",
 		joinColumns = @JoinColumn(name = "account_id"),
 		inverseJoinColumns = @JoinColumn(name = "rank_id"))
-	private Set<Rank> ranks;
+	private Set<Rank> ranks = new HashSet<>();
 	
 	private boolean enabled;
 	
@@ -69,6 +73,7 @@ public class Account implements Serializable {
 	public String getSurname() { return this.surname; }
 	public Locale getPreferredLocale() { return this.preferredLocale; }
 	public boolean isEnabled() { return this.enabled; }
+	public String getEmail() { return this.email; }
 
 	public void setId(int id) { this.id = id; }
 	public void setUsername(String username) { this.username = username; }
@@ -78,7 +83,9 @@ public class Account implements Serializable {
 	public void setSurname(String surname) { this.surname = surname; }
 	public void setPreferredLocale(Locale locale) { this.preferredLocale = locale; }
 	public void setEnabled(boolean enabled) { this.enabled = enabled; }
+	public void setEmail(String email) { this.email = email; }
 	
 	public Set<Rank> getRanks() { return this.ranks; }
 	public void setRanks(Set<Rank> ranks) { this.ranks = ranks; }
+	public void setRank(Rank rank) { this.ranks.add(rank); }
 }

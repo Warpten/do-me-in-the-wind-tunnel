@@ -17,8 +17,8 @@
 	
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
-	<c:if test="${param.error ne null}">
-		<div id="login-error"><img src="<c:url value="/img/error.png" />" /><spring:message code="label.login.error" /></div>
+	<c:if test="${error ne null}">
+		<div id="login-error"><img src="<c:url value="/img/error.png" />" /><spring:message code="${error ne null ? error : label.login.error}" /></div>
 	</c:if>
 
 	<c:if test="${param.logout ne null}">
@@ -49,5 +49,13 @@
 		<a href="?locale=fr"><img src="/img/flags/fr.png" /></a>
 		<a href="?locale=en"><img src="/img/flags/gb.png" /></a>
 	</p>
+	
+	<c:url value="/register" var="register_url"/>
+	<script type="text/javascript">
+	document.querySelector("input[type='button']").onclick = function(e) {
+		
+		window.location.href = "${register_url}";
+	};
+	</script>
 </body>
 </html>

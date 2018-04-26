@@ -16,8 +16,7 @@ import fr.formation.spring.museum.security.JpaUserDetailsService;
 @Configuration
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private JpaUserDetailsService jpaUserDetailsService;
+	private @Autowired JpaUserDetailsService jpaUserDetailsService;
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -28,7 +27,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 			.antMatchers("/css/**", "/js/**").permitAll()
-			.antMatchers("/index", "/login").not().hasRole("USER")
+			.antMatchers("/index", "/login", "/register").not().hasRole("USER")
 			.antMatchers("/user/**").hasRole("USER")
 			.antMatchers("/admin/**").hasRole("ADMIN")
 			.antMatchers("/curator/**").hasRole("CURATOR")

@@ -1,8 +1,11 @@
+#body-block > *:not(:first-child) { margin: auto; width: fit-content; }
+
 table#user-list {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
     font-size: 13px;
     text-align: left;
     border-collapse: collapse;
+    margin: auto;
 }
 
 table#user-list th {
