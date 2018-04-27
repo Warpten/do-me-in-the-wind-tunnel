@@ -66,14 +66,13 @@ meter {
     /* float: left; */
     /* clear: left; */
     width: auto;
-    height: 5px;
+    height: 10px;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     background: none;
     background-color: rgba(0, 0, 0, 0.03);
     border: 1px solid #DDDDDD;
-    margin-top: -5px;
     /* padding-bottom: 12px; */
     margin-left: -10px;
     margin-right: -10px;
@@ -98,19 +97,18 @@ meter[value="3"]::-moz-meter-bar { background: orange; }
 meter[value="4"]::-moz-meter-bar { background: green; }
 
 
-meter:hover .tooltip { display: inline; }
+meter:hover .tooltip { display: inline-block; }
 
 .tooltip {
-	display: none;
+    display: none;
     padding: 4px;
     font-family: sans-serif;
     font-size: xx-small;
     background-color: black;
     color: white;
     border-radius: 4px;
-    position: relative;
-    left: -91px;
-    top: -10px;
+    transform-origin: right center;
+    transform: translateX(-110%) translateY(-41%);
 }
 
 .tooltip .arrow-right {
