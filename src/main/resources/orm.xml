@@ -10,6 +10,7 @@
             <named-attribute-node name="id" />
             <named-attribute-node name="username" />
             <named-attribute-node name="preferredLocale" subgraph="graph.Account.withLocaleRanks.subgraph.locale" />
+            <named-attribute-node name="ranks" subgraph="graph.Account.withLocaleRanks.subgraph.ranks" />
 
             <subgraph name="graph.Account.withLocale.subgraph.locale"
 				class="fr.formation.spring.museum.models.Locale">
@@ -17,7 +18,6 @@
                 <named-attribute-node name="key" />
             </subgraph>
             
-            <named-attribute-node name="ranks" subgraph="graph.Account.withLocaleRanks.subgraph.ranks" />
 
             <subgraph name="graph.Account.withLocaleRanks.subgraph.ranks"
 				class="fr.formation.spring.museum.models.Rank">
@@ -40,6 +40,12 @@
 	            <named-attribute-node name="id" />
 	            <named-attribute-node name="username" />
 			</subgraph>
+
+		</named-entity-graph>
+
+		<named-entity-graph name="graph.Rank.minimalistic">
+			<named-attribute-node name="id" />
+			<named-attribute-node name="name"/>
 
 		</named-entity-graph>
 	</entity>

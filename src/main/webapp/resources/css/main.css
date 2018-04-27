@@ -147,18 +147,39 @@ form ul > li:last-child {
 	margin-bottom: 0px !important;
 }
 
-form li > label{
+form li > label {
     display: block;
     float: left;
-    margin-top: -19px;
+    transform-origin: top left;
+    transform: translateY(calc(-50% + -2px)) translateX(9px);
+    margin: -9px;
     background: #FFFFFF;
     height: 14px;
-    padding: 2px 5px 2px 5px;
+    padding: 2px 5px 5px 5px;
     color: #B9B9B9;
     font-size: 14px;
     overflow: hidden;
     font-family: Arial, Helvetica, sans-serif;
+    z-index: 200;
+    position: relative;
 }
+
+form li > label:after {
+	z-index: 100;
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: 100%;
+	height: 50%;
+	border-left: 1px solid #DDDDDD;
+	border-bottom: 1px solid #DDDDDD;
+	border-right: 1px solid #DDDDDD;
+	box-sizing: border-box;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;	
+}
+
 form input[type="text"],
 form input[type="date"],
 form input[type="datetime"],
