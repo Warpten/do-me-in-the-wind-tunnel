@@ -56,25 +56,27 @@ form > ul > li:last-child { padding: 0px !important; margin-bottom: 0px !importa
 	margin: 5px;
 }
 
+li.error meter { border: 1px solid darkred; }
+
 meter {
-	display: block;
-    margin: -9px;
-    transform: translateY(-100%) rotate(90deg);
-    transform-origin: left bottom;
-    float: left;
-    clear: left;
-    width: 46px;
+    display: block;
+    /* margin: -4px; */
+    /* transform: translateY(-100%) rotate(90deg); */
+    /* transform-origin: left bottom; */
+    /* float: left; */
+    /* clear: left; */
+    width: auto;
     height: 5px;
     -webkit-appearance: none;
-	-moz-appearance: none;
+    -moz-appearance: none;
     appearance: none;
-    
-    /* Applicable only to Firefox */
-	background: none;
-	background-color: rgba(0, 0, 0, 0.1);
-	
-	border: 0;
-    border-radius: 1px;
+    background: none;
+    background-color: rgba(0, 0, 0, 0.03);
+    border: 1px solid #DDDDDD;
+    margin-top: -5px;
+    /* padding-bottom: 12px; */
+    margin-left: -10px;
+    margin-right: -10px;
 }
 
 meter::-webkit-meter-bar {
@@ -84,13 +86,76 @@ meter::-webkit-meter-bar {
 
 
 /* Webkit based browsers */
-meter[value="1"]::-webkit-meter-optimum-value { background: red; }
-meter[value="2"]::-webkit-meter-optimum-value { background: yellow; }
-meter[value="3"]::-webkit-meter-optimum-value { background: orange; }
-meter[value="4"]::-webkit-meter-optimum-value { background: green; }
+meter[value="1"]::-webkit-meter-optimum-value, meter.pw-str-1 { background: red; }
+meter[value="2"]::-webkit-meter-optimum-value, meter.pw-str-2 { background: yellow; }
+meter[value="3"]::-webkit-meter-optimum-value, meter.pw-str-3 { background: orange; }
+meter[value="4"]::-webkit-meter-optimum-value, meter.pw-str-4 { background: green; }
 
 /* Gecko based browsers */
 meter[value="1"]::-moz-meter-bar { background: red; }
 meter[value="2"]::-moz-meter-bar { background: yellow; }
 meter[value="3"]::-moz-meter-bar { background: orange; }
 meter[value="4"]::-moz-meter-bar { background: green; }
+
+
+meter:hover .tooltip { display: inline; }
+
+.tooltip {
+	display: none;
+    padding: 4px;
+    font-family: sans-serif;
+    font-size: xx-small;
+    background-color: black;
+    color: white;
+    border-radius: 4px;
+    position: relative;
+    left: -91px;
+    top: -10px;
+}
+
+.tooltip .arrow-right {
+    width: 0;
+    height: 0;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 4px solid #000000;
+    position: absolute;
+    right: -4px;
+    top: 4px;
+}
+
+.arrow-up {
+  width: 0; 
+  height: 0; 
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  
+  border-bottom: 5px solid black;
+}
+
+.arrow-down {
+  width: 0; 
+  height: 0; 
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  
+  border-top: 20px solid #f00;
+}
+
+.arrow-right {
+  width: 0; 
+  height: 0; 
+  border-top: 60px solid transparent;
+  border-bottom: 60px solid transparent;
+  
+  border-left: 60px solid green;
+}
+
+.arrow-left {
+  width: 0; 
+  height: 0; 
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent; 
+  
+  border-right:10px solid blue; 
+}

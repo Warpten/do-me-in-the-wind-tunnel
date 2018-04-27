@@ -31,8 +31,13 @@
 				</li>
 				<li class="${error_password ne null ? 'error' : ''}">
 					<label for="password"><spring:message code="label.form.register.field.password" /></label>
-					<meter max="4" id="password-strength-meter"></meter>
 					<form:password path="password" />
+					<meter max="4" id="password-strength-meter">
+						<span class="tooltip">
+							Password strength
+							<span class="arrow-right"></span>
+						</span>
+					</meter>
 					<span><spring:message code="${error_password ne null ? error_password : 'label.form.register.field.password.details'}" /></span>
 				</li>
 				<li class="${error_email ne null ? 'error' : ''}">
@@ -76,17 +81,20 @@
 		<a href="?locale=en"><img src="/img/flags/gb.png" /></a>
 	</p>
 	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>
 	<script>
 	var password = document.getElementById('password');
 	var meter = document.getElementById('password-strength-meter');
 
-	password.addEventListener('input', function() {
-	  var val = password.value;
+	$("#password").keyup(function() {
+	  var val = $(this).val();
 	  var result = zxcvbn(val);
 
 	  // Update the password strength meter
 	  meter.value = result.score;
+	  $(meter).attr("class", "pw-str-" + result.score);
+	  
 	});
 
 	</script>
